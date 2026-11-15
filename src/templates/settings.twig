@@ -1,0 +1,33 @@
+{% import "_includes/forms" as forms %}
+
+{% set readOnly = readOnly ?? false %}
+
+{{ forms.autosuggestField({
+    label: "API Key"|t('groundmail'),
+    instructions: "Your Groundmail API key (it starts with `gm_`). Use an environment variable such as `$GROUNDMAIL_API_KEY` to keep it out of the project config."|t('groundmail'),
+    id: 'apiKey',
+    name: 'apiKey',
+    value: adapter.apiKey,
+    suggestEnvVars: true,
+    required: true,
+    errors: adapter.getErrors('apiKey'),
+    disabled: readOnly,
+}) }}
+
+{{ forms.selectField({
+    label: "Email category"|t('groundmail'),
+    instructions: "Account, password reset, order and form email is transactional. Choose product for email about your product, such as onboarding tips, which recipients can opt out of."|t('groundmail'),
+    id: 'category',
+    name: 'category',
+    value: adapter.category ?? 'transactional',
+    options: [
+        { label: "Transactional"|t('groundmail'), value: 'transactional' },
+        { label: "Product"|t('groundmail'), value: 'product' },
+    ],
+    errors: adapter.getErrors('category'),
+    disabled: readOnly,
+}) }}
+
+<p class="light">
+    {{ "The From address in these settings must be on a domain you have verified in Groundmail."|t('groundmail') }}
+</p>
