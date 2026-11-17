@@ -10,7 +10,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: groundbox-2vcpu
     permissions:
       contents: write
     steps:
